@@ -9,6 +9,7 @@ import {
   UseGuards,
   Request,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { ObjectId } from 'mongoose';
 import {
   CreateUserDto,
@@ -24,6 +25,7 @@ import { ReqAuth } from '~/interface';
 import { Role } from '~/auth/decorators/role.decorator';
 import { RoleAuth } from '~/enum';
 
+@ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}

@@ -4,11 +4,13 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Express } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from '~/plugin/multer.plugin';
 import { FileService } from '~/file/file.service';
 
+@ApiTags('file')
 @Controller('file')
 export class FileController {
   constructor(private readonly fileService: FileService) {}

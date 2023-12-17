@@ -1,4 +1,5 @@
 import { Controller, Get, Param, Post, Put, Body } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { ObjectId } from 'mongoose';
 import { Public } from '~/auth/decorators/public.decorator';
 import { EmailService } from '~/email/email.service';
@@ -7,6 +8,7 @@ import { DataSendMail, EmailTemplate } from '~/interface';
 import { Role } from '~/auth/decorators/role.decorator';
 import { RoleAuth } from '~/enum';
 
+@ApiTags('email')
 @Controller('email')
 export class EmailController {
   constructor(private readonly emailService: EmailService) {}

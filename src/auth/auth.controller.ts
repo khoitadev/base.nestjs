@@ -1,4 +1,5 @@
-import { Body, Controller, Post, Get, Request } from '@nestjs/common';
+import { Body, Controller, Post, Request } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from '~/auth/auth.service';
 import {
   LoginDto,
@@ -11,6 +12,7 @@ import { UserService } from '~/user/user.service';
 import { Public } from '~/auth/decorators/public.decorator';
 import { ReqRegister } from '~/interface';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(

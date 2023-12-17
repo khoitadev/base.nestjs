@@ -1,4 +1,5 @@
 import { Controller, Get, Param, Post, Body } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { ObjectId } from 'mongoose';
 import { CreateAdminDto } from '~/dto';
 import { AdminService } from '~/admin/admin.service';
@@ -7,6 +8,7 @@ import { Role } from '~/auth/decorators/role.decorator';
 import { UserService } from '~/user/user.service';
 import { RoleAuth } from '~/enum';
 
+@ApiTags('admin')
 @Controller('admin')
 export class AdminController {
   constructor(
