@@ -4,7 +4,7 @@ import { ObjectId } from 'mongoose';
 import { Public } from '~/auth/decorators/public.decorator';
 import { EmailService } from '~/email/email.service';
 import { CreateEmailDto, SendEmailDto, UpdateEmailDto } from '~/dto';
-import { DataSendMail, EmailTemplate } from '~/interface';
+import { EmailTemplate } from '~/interface';
 import { Role } from '~/auth/decorators/role.decorator';
 import { RoleAuth } from '~/enum';
 

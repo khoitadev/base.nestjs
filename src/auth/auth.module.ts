@@ -1,4 +1,3 @@
-import { ConfigService, ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { AdminModule } from '~/admin/admin.module';

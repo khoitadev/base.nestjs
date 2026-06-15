@@ -7,7 +7,7 @@ import { CreateLanguageDto } from '~/dto';
 export class LanguageService {
   constructor(
     @Inject('LANGUAGE_MODEL')
-    private languageModel: Model<Language>,
+    private readonly languageModel: Model<Language>,
   ) {}
 
   async create(createLanguageDto: CreateLanguageDto): Promise<Language> {

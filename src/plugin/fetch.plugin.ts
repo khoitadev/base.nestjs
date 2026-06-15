@@ -17,9 +17,10 @@ type QueryPost = {
 class Fetch {
   static async get({ path, headers, params }: QueryGet): Promise<any> {
     try {
-      headers = Object.assign({ 'Content-Type': 'application/json' }, headers);
+      headers = { 'Content-Type': 'application/json', ...headers };
+      const url = params ? `${path}?${qs.stringify(params)}` : path;
       return (
-        await fetch(`${path}${params ? `?${qs.stringify(params)}` : ''}`, {
+        await fetch(url, {
           method: 'GET',
           headers: headers,
         })
@@ -33,7 +34,7 @@ class Fetch {
     try {
       let body = data;
       if (Helper.typeValue(data) === 'Object') body = JSON.stringify(body);
-      headers = Object.assign({ 'Content-Type': 'application/json' }, headers);
+      headers = {'Content-Type': 'application/json', ...headers};
       return (
         await fetch(`${path}`, {
           method: 'POST',
@@ -48,7 +49,7 @@ class Fetch {
 
   static async put({ path, headers, data }: QueryPost): Promise<any> {
     try {
-      headers = Object.assign({ 'Content-Type': 'application/json' }, headers);
+      headers = {'Content-Type': 'application/json', ...headers};
       return (
         await fetch(`${path}`, {
           method: 'PUT',
@@ -63,7 +64,7 @@ class Fetch {
 
   static async patch({ path, headers, data }: QueryPost): Promise<any> {
     try {
-      headers = Object.assign({ 'Content-Type': 'application/json' }, headers);
+      headers = {'Content-Type': 'application/json', ...headers};
       return (
         await fetch(`${path}`, {
           method: 'PATCH',

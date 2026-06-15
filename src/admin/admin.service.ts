@@ -8,8 +8,8 @@ import { encryptionPassword } from '~/helper/auth.helper';
 @Injectable()
 export class AdminService {
   constructor(
-    @Inject('ADMIN_MODEL') private adminModel: Model<Admin>,
-    private jwtService: JwtService,
+    @Inject('ADMIN_MODEL') private readonly adminModel: Model<Admin>,
+    private readonly jwtService: JwtService,
   ) {}
 
   async transformAdmin(admin: Admin): Promise<any> {

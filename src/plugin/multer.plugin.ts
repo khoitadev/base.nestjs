@@ -22,7 +22,7 @@ const generateFileName = (originalname: string) => {
 };
 
 const storage = multer.diskStorage({
-  destination: async (req, file, cb) => {
+  destination: (req, file, cb) => {
     try {
       const fileDir = path.join(__dirname, '.~/.~/upload');
       if (!fs.existsSync(fileDir)) {

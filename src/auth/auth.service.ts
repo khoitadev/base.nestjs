@@ -24,10 +24,10 @@ import Fetch from '~/plugin/fetch.plugin';
 @Injectable()
 export class AuthService {
   constructor(
-    private userService: UserService,
-    private adminService: AdminService,
-    private emailService: EmailService,
-    private jwtService: JwtService,
+    private readonly userService: UserService,
+    private readonly adminService: AdminService,
+    private readonly emailService: EmailService,
+    private readonly jwtService: JwtService,
   ) {}
 
   private getNameFromEmail(email: string) {
@@ -144,7 +144,7 @@ export class AuthService {
     const dataSdk: any = await Fetch.get({
       path: `https://www.googleapis.com/oauth2/v2/tokeninfo?access_token=${accessToken}`,
     });
-    if (dataSdk && dataSdk.user_id) {
+    if (dataSdk?.user_id) {
       dataGoogle.uid = dataSdk.user_id;
       dataGoogle.email = dataSdk.email;
       dataGoogle.name = dataSdk.name || this.getNameFromEmail(dataSdk.email);

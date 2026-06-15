@@ -13,9 +13,9 @@ import { logEvent } from '~/helper/log.helper';
 export class AllExceptionsFilter implements ExceptionFilter {
   constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
 
-  catch(exception: unknown | any, host: ArgumentsHost): void {
+  catch(exception: unknown, host: ArgumentsHost): void {
     const { httpAdapter } = this.httpAdapterHost;
-    const { name, message, response } = exception;
+    const { name, message, response } = exception as any;
     const ctx = host.switchToHttp();
     const request = ctx.getRequest<Request>();
     const httpStatus =

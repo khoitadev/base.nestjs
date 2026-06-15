@@ -12,16 +12,14 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { ObjectId } from 'mongoose';
 import {
-  CreateUserDto,
   UpdatePasswordDto,
   UpdateUserDto,
   VerifyEmailDto,
 } from '~/dto';
 import { UserService } from '~/user/user.service';
-import { User } from '~/interface';
+import { User, ReqAuth } from '~/interface';
 import { Public } from '~/auth/decorators/public.decorator';
 import { AuthGuard } from '~/auth/guard/auth.guard';
-import { ReqAuth } from '~/interface';
 import { Role } from '~/auth/decorators/role.decorator';
 import { RoleAuth } from '~/enum';
 

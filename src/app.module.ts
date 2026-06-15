@@ -54,6 +54,6 @@ import { EmailModule } from '~/email/email.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    // consumer.apply(LoggerMiddleware).forRoutes('language');
+    consumer.apply(LoggerMiddleware).forRoutes('language');
   }
 }

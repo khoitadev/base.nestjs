@@ -9,8 +9,7 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       lowercase: true,
-      match:
-        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
       // required: true,
     },
     password: {
@@ -38,7 +37,7 @@ const userSchema = new mongoose.Schema(
     status: {
       type: String,
       required: false,
-      default: 'active', //detele
+      default: 'active', //delete
     },
     typeLogin: {
       type: String,

@@ -8,7 +8,7 @@ cloudinary.config({
 });
 
 export const cloud = {
-  uploadSingle: (file) => {
+  uploadSingle: (file: string) => {
     return new Promise((resolve) => {
       cloudinary.uploader
         .upload(file, {
@@ -24,7 +24,7 @@ export const cloud = {
         });
     });
   },
-  uploadMultiple: (file) => {
+  uploadMultiple: (file: string) => {
     return new Promise((resolve) => {
       cloudinary.uploader
         .upload(file, {
@@ -44,7 +44,7 @@ export const cloud = {
         });
     });
   },
-  reSizeImage: (id, h, w) => {
+  reSizeImage: (id: string, h: number, w: number) => {
     return cloudinary.url(id, {
       height: h,
       width: w,

@@ -21,11 +21,11 @@ const MAIL_PASSWORD = process.env.MAIL_PASSWORD;
 @Injectable()
 export class EmailService {
   constructor(
-    @Inject('EMAIL_TEMPLATE_MODEL') private emailModel: Model<EmailTemplate>,
-    @Inject('OTP_MODEL') private otpModel: Model<Otp>,
+    @Inject('EMAIL_TEMPLATE_MODEL') private readonly emailModel: Model<EmailTemplate>,
+    @Inject('OTP_MODEL') private readonly otpModel: Model<Otp>,
   ) {}
 
-  private transporter = nodemailer.createTransport({
+  private readonly transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: MAIL_USERNAME,

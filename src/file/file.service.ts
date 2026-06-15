@@ -35,7 +35,7 @@ export class FileService {
           chunk_size: 6000000,
         },
         function (error, result) {
-          if (error) reject(error);
+          if (error) reject(new Error(error.message));
           const { width, height, format } = result;
           const reg = new RegExp(`/upload/(v[0-9]+)/(${result.public_id}.*)`);
           const regExec = reg.exec(result.url);

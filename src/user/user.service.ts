@@ -15,9 +15,9 @@ import { encryptionPassword, validatePassword } from '~/helper/auth.helper';
 @Injectable()
 export class UserService {
   constructor(
-    @Inject('USER_MODEL') private userModel: Model<User>,
-    private jwtService: JwtService,
-    private emailService: EmailService,
+    @Inject('USER_MODEL') private readonly userModel: Model<User>,
+    private readonly jwtService: JwtService,
+    private readonly emailService: EmailService,
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {

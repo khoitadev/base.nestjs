@@ -3,11 +3,11 @@ import TelegramBot from 'node-telegram-bot-api';
 import { promisify } from 'util';
 import * as crypto from 'crypto';
 import { config } from 'dotenv';
+import requestIp from 'request-ip';
+import satelize from 'satelize';
+import randomString from 'randomstring';
 config();
 const execOrigin = promisify(childProcess.exec);
-// const requestIp = require("request-ip");
-// const satelize = require("satelize");
-// const randomString = require("randomstring");
 
 const TIME_REQUIREMENT = process.env.TIME_REQUIREMENT ?? 30;
 const KEY_VERSION_SIGN = process.env.KEY_VERSION_SIGN;
@@ -102,29 +102,32 @@ const helper = {
 
     return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
   },
-  // getTimeByTimezone: function (ip: string) {
-  // 	return satelize.satelize({ ip }, (err: any, payload: any) => {
-  // 		return payload;
-  // 	});
-  // },
-  // getIpByRequest: function (req: any) {
-  // 	return requestIp.getClientIp(req);
-  // },
+  getTimeByTimezone: function (ip: string) {
+    return satelize.satelize({ ip }, (err: any, payload: any) => {
+      return payload;
+    });
+  },
+  getIpByRequest: function (req: any) {
+    return requestIp.getClientIp(req);
+  },
   getCurrentTimestamp: function () {
     return Math.round(new Date().getTime() / 1000);
   },
   stringToTime: function (str: string) {
     return Math.round(Date.parse(str) / 1000);
   },
-  //   getUniqueString: function (data: string) {
-  //   	return helper.sha256Hash(data + Math.round(new Date().getTime() / 1000)) + randomString.generate();
-  //   },
-  // randomCode: function ({ length, type }: any) {
-  // 	const options: any = {};
-  // 	if (length) options.length = length;
-  // 	if (type) options.type = type;
-  // 	return randomString.generate(options);
-  // },
+  getUniqueString: function (data: string) {
+    return (
+      helper.sha256Hash(data + Math.round(new Date().getTime() / 1000)) +
+      randomString.generate()
+    );
+  },
+  randomCode: function ({ length, type }: any) {
+    const options: any = {};
+    if (length) options.length = length;
+    if (type) options.type = type;
+    return randomString.generate(options);
+  },
   generateFileName: function (originalname: any) {
     const c = originalname.lastIndexOf('.');
     let extension = originalname.slice(c + 1);
@@ -148,8 +151,11 @@ const helper = {
   },
   sortObject: (o: any) =>
     Object.keys(o)
-      .sort()
-      .reduce((r: any, k) => ((r[k] = o[k]), r), {}),
+      .sort((a, b) => a.localeCompare(b))
+      .reduce((r: any, k) => {
+        r[k] = o[k];
+        return r;
+      }, {}),
   objToString: (obj: any): string => {
     let dataMd5 = '';
     for (const key in obj) {
@@ -192,19 +198,13 @@ const helper = {
     return Math.floor(Math.random() * (max - min)) + min;
   },
   removeAccent: function (str: string): string {
-    str = str.replace(
-      /á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ|Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ/g,
-      'a',
-    );
-    str = str.replace(/đ|Đ/g, 'd');
-    str = str.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ|É|È|Ẻ|Ẽ|Ẹ|Ê|Ế|Ề|Ể|Ễ|Ệ/g, 'e');
-    str = str.replace(/í|ì|ỉ|ĩ|ị|Í|Ì|Ỉ|Ĩ|Ị/g, 'i');
-    str = str.replace(
-      /ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ|Ó|Ò|Ỏ|Õ|Ọ|Ô|Ố|Ồ|Ổ|Ỗ|Ộ|Ơ|Ớ|Ờ|Ở|Ỡ|Ợ/g,
-      'o',
-    );
-    str = str.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự|Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự/g, 'u');
-    str = str.replace(/ý|ỳ|ỷ|ỹ|ỵ|Ý|Ỳ|Ỷ|Ỹ|Ỵ/g, 'y');
+    str = str.replace(/[\u00E0-\u00E5\u0102-\u0103\u00C0-\u00C5]/g, 'a');
+    str = str.replace(/[\u0110-\u0111]/g, 'd');
+    str = str.replace(/[\u00E8-\u00EB\u00C8-\u00CB]/g, 'e');
+    str = str.replace(/[\u00EC-\u00EF\u00CC-\u00CF]/g, 'i');
+    str = str.replace(/[\u00F2-\u00F6\u00D2-\u00D6\u01A0-\u01A1]/g, 'o');
+    str = str.replace(/[\u00F9-\u00FC\u00D9-\u00DC\u01AF-\u01B0]/g, 'u');
+    str = str.replace(/[\u00FD-\u00FF\u00DD-\u00DF]/g, 'y');
     str = str.replace(/\s+/g, '-');
     str = str.replace(/[^\w+]/g, '-');
     str = str.replace(/_+/g, '-');
